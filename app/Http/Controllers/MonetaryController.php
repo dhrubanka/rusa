@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Input;
-use App\Models\Inputtype;
-use App\Models\Record;
+use App\Models\Monetary;
 use Illuminate\Http\Request;
 
-class RecordController extends Controller
+class MonetaryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +14,7 @@ class RecordController extends Controller
      */
     public function index()
     {
-        return view('/records/index');
+        //
     }
 
     /**
@@ -25,16 +23,8 @@ class RecordController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {   
-        $inputtypes = Inputtype::all();
-
-        return view('/records/create', ['inputtypes'=>$inputtypes]);
-    }
-
-    public function getTypes(Request $request, $id)
     {
-
-        echo json_encode(Input::where('input_type_id', '=', $id)->get());;
+        //
     }
 
     /**
@@ -51,10 +41,10 @@ class RecordController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Record  $record
+     * @param  \App\Models\Monetary  $monetary
      * @return \Illuminate\Http\Response
      */
-    public function show(Record $record)
+    public function show(Monetary $monetary)
     {
         //
     }
@@ -62,10 +52,10 @@ class RecordController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Record  $record
+     * @param  \App\Models\Monetary  $monetary
      * @return \Illuminate\Http\Response
      */
-    public function edit(Record $record)
+    public function edit(Monetary $monetary)
     {
         //
     }
@@ -74,10 +64,10 @@ class RecordController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Record  $record
+     * @param  \App\Models\Monetary  $monetary
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Record $record)
+    public function update(Request $request, Monetary $monetary)
     {
         //
     }
@@ -85,10 +75,10 @@ class RecordController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Record  $record
+     * @param  \App\Models\Monetary  $monetary
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Record $record)
+    public function destroy(Monetary $monetary)
     {
         //
     }

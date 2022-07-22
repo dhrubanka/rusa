@@ -15,7 +15,16 @@ class CreateRecordsTable extends Migration
     {
         Schema::create('records', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('input_type_id');
+            $table->string('fund_source');
+            $table->text('specification_of_the_asset');
+            $table->string('unique_id');
+            $table->string('mode_of_purchase');
+            $table->string('date_of_purchase');
+            $table->string('image')->nullable();
             $table->timestamps();
+
+
         });
     }
 

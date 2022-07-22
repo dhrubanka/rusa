@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\InputtypeController;
 use App\Http\Controllers\InputController;
+use App\Http\Controllers\RecordController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,9 +36,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/inputs/create/{id}', [InputController::class, 'create']);
     Route::post('/inputs/store', [InputController::class, 'store']);
     Route::get('/inputs/show/{id}', [InputController::class, 'show']);
-    //entry
-    Route::get('/record', [InputController::class, 'index']);
-    Route::get('/record/create/', [InputController::class, 'create']);
-    Route::post('/record/store', [InputController::class, 'store']);
-    Route::get('/record/show/{id}', [InputController::class, 'show']);
+    //Record
+    Route::get('/records', [RecordController::class, 'index']);
+    Route::get('/records/create/', [RecordController::class, 'create']);
+    Route::post('/records/store', [RecordController::class, 'store']);
+    Route::get('/records/show/{id}', [RecordController::class, 'show']);
+    Route::get('/records/getTypes/{id}', [RecordController::class, 'getTypes']);
 });

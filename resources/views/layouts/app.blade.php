@@ -15,7 +15,7 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
@@ -53,7 +53,10 @@
                             @endif
                         @else
                         <li class="nav-item">
-                            <a class="nav-link" href="/input-types">Input-Types </a>
+                            <a class="nav-link" href="/records">Records</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/input-types">Input-Types</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="/inputs">Inputs</a>
