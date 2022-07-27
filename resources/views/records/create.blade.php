@@ -36,7 +36,7 @@
                     @csrf
                     <div class="mb-3">
                       <label for="fund" class="form-label">Input Types</label>
-                      <select class="form-select" id="inputtype" aria-label="Default select example">
+                      <select class="form-select" name="inputtype" id="inputtype" aria-label="Default select example">
                         <option selected>Select Input Type</option>
                         @foreach ($inputtypes as $input)
                           <option value="{{$input->id}}">{{$input->name}}</option>
@@ -51,7 +51,7 @@
                     </div>
                     <div class="mb-3">
                       <label for="fund" class="form-label">Source of Fund</label>
-                      <select class="form-select" id="fund" aria-label="Default select example">
+                      <select class="form-select" name="fund" id="fund" aria-label="Default select example">
                         <option selected>Select Source</option>
                         <option value="RUSA">RUSA</option>
                         <option value="UGC">UGC</option>
@@ -62,15 +62,15 @@
                     </div>
                     <div class="mb-3">
                       <label for="exampleFormControlTextarea1" class="form-label">Specification of the Asset</label>
-                      <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                      <textarea class="form-control" name="specification" id="exampleFormControlTextarea1" rows="3"></textarea>
                     </div>
                     <div class="mb-3">
                       <label for="exampleInputEmail1" class="form-label">Unique ID of the stock to be generated</label>
-                      <input type="text" class="form-control" name="name" id="exampleInputEmail1" aria-describedby="emailHelp">
+                      <input type="text" class="form-control" name="unique_id" id="exampleInputEmail1" aria-describedby="emailHelp">
                     </div>
                     <div class="mb-3">
                       <label for="fund" class="form-label">Mode of Purchase</label>
-                      <select class="form-select" id="fund" aria-label="Default select example">
+                      <select class="form-select" name="mode_of_purchase" id="fund" aria-label="Default select example">
                         <option selected>Select Mode</option>
                         <option value="RUSA">RUSA</option>
                         <option value="UGC">UGC</option>
@@ -79,11 +79,11 @@
                     </div>
                     <div class="mb-3">
                       <label for="formFile" class="form-label">Photograph</label>
-                      <input class="form-control" type="file" id="formFile">
+                      <input class="form-control" name="photo" type="file" id="formFile">
                     </div>
                     <div class="mb-3">
                       <label for="exampleInputEmail1" class="form-label">Date of Purchase</label>
-                      <input type="date" class="form-control" name="name" id="exampleInputEmail1" aria-describedby="emailHelp">
+                      <input type="date" class="form-control" name="date_of_purchase" id="exampleInputEmail1" aria-describedby="emailHelp">
                     </div>
                     <div class="form-group">
                       <button type="submit" class="btn btn-primary">Create</button>
@@ -115,24 +115,32 @@
                   $('#monetary').append(
                  ` <hr><label for="exampleInputEmail1" class="form-label">Monetary Values of the Asset</label> </br>`
                   );
+                  var i = 0;
                   response.forEach(element => {
                     console.log(element['name']);
+                    
                       $('#particulars').append(
                            
                           // ` <label for="particular" class="form-label">${element['name']}</label>`
-                          `<label for="particular" class="form-label">${element['name']}</label>
-                          <input type="text" class="form-control" placeholder="Quanity in numbers" name="${element['id']}" id="particular">`
+                          `<label for="${element['id']}" class="form-label">${element['name']}</label>
+                          <input type="hidden" class="form-control" placeholder="Quanity in numbers" name="particulars[`+i+`][name]" value="${element['name']}" id="${element['id']}">
+                          <input type="text" class="form-control" placeholder="Quanity in numbers" name="particulars[`+i+`][value]" id="${element['id']}">`
                       );
+                      i++;
                   });
 
+                  var j = 0;
                   response.forEach(element => {
                     console.log(element['name']);
                       $('#monetary').append(
                            
                           // ` <label for="particular" class="form-label">${element['name']}</label>`
-                          `<label for="particular" class="form-label">${element['name']}</label>
-                          <input type="text" class="form-control" placeholder="Per Unit Cost (in rupees)" name="${element['id']}" id="particular">`
+                          `<label for="${element['id']}" class="form-label">${element['name']}</label>
+                          <input type="hidden" class="form-control" placeholder="Quanity in numbers" name="monetary[`+j+`][name]" value="${element['name']}" id="${element['id']}">
+                          <input type="text" class="form-control" placeholder="Quanity in numbers" name="monetary[`+j+`][value]" id="${element['id']}">`
+
                       );
+                      j++;
                   });
                   $('#monetary').append(`<hr>`);
                   

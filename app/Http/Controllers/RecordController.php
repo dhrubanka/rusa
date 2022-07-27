@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Input;
 use App\Models\Inputtype;
+use App\Models\Monetary;
+use App\Models\Particular;
 use App\Models\Record;
 use Illuminate\Http\Request;
 
@@ -45,7 +47,48 @@ class RecordController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //dd($request);
+        $validatedData = $request->validate([
+            'inputtype' => 'required',
+            'particulars' => 'required',
+            'monetary' => 'required',
+            'fund' => 'required',
+            'specification' => 'required',
+            'unique_id' => 'required',
+            'mode_of_purchase' => 'required',
+            'date_of_purchase' => 'required',
+        ]);
+
+        $record = Record::create([
+            'input_type_id' => request('inputtype'),
+            'fund_source' => request('fund'),
+            'specification_of_the_asset' => request('specification'),
+            'unique_id' => request('unique_id'),
+            'mode_of_purchase' => request('mode_of_purchase'),
+            'date_of_purchase' => request('date_of_purchase')
+        ]);
+
+        if(request('particulars')){
+            foreach ($request->particulars as $key => $value) {
+                Particular::create([
+                    'record_id' => $record->id,
+                    'name' => $value['name'],
+                    'value' => $value['value'], 
+                ]);
+            }
+        }
+
+        if(request('monetary')){
+            foreach ($request->monetary as $key => $value) {
+                Monetary::create([
+                    'record_id' => $record->id,
+                    'name' => $value['name'],
+                    'value' => $value['value'], 
+                ]);
+            }
+        }
+
+        return back()->with('success', 'Sucessfully inserted a new type!');
     }
 
     /**
