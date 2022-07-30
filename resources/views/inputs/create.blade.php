@@ -39,8 +39,8 @@
                             <input type="text" class="form-control" name="name" id="exampleInputEmail1" aria-describedby="emailHelp">
                     </div>
                     <div class="mb-3">
-                        <label for="exampleInputEmail1" class="form-label">Input Name</label>
-                        <input type="text" class="form-control hidden" name="id" id="exampleInputEmail1" value="{{$id}}" aria-describedby="emailHelp">
+                         
+                        <input type="hidden" class="form-control hidden" name="id" id="exampleInputEmail1" value="{{$id}}" aria-describedby="emailHelp">
                 </div>
                     <div class="form-group">
                             <button type="submit" class="btn btn-primary">Create</button>

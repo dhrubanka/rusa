@@ -15,6 +15,7 @@ class CreateRecordsTable extends Migration
     {
         Schema::create('records', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('input_type_id');
             $table->string('fund_source');
             $table->text('specification_of_the_asset');
@@ -24,6 +25,10 @@ class CreateRecordsTable extends Migration
             $table->string('image')->nullable();
             $table->timestamps();
 
+            $table->foreign('user_id')
+            ->references('id')
+            ->on('users')
+            ->onDelete('cascade');
 
         });
     }

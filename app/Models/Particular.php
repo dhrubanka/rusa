@@ -9,4 +9,8 @@ class Particular extends Model
 {
     use HasFactory;
     protected $guarded = [];
+
+    public function record(){
+        return $this->belongsTo(Record::class);
+    }
 }

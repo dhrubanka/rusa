@@ -5,7 +5,7 @@
    
     <div class="d-flex justify-content-between">
         <div class="h1">
-            Inputs
+           {{$name}} Inputs
         </div>
         <a href="/inputs/create/{{$id}}" class="btn btn-primary"> Create New Input</a>
     </div>

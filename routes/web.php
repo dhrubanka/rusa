@@ -26,6 +26,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 
 Route::middleware('auth')->group(function () {
+
     Route::middleware('regular')->group(function () {
             //input types 
             Route::get('/input-types', [InputtypeController::class, 'index']);
@@ -46,6 +47,7 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::middleware('admin')->group(function () {
+        
 
     });
 });

@@ -2,23 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Input;
-use App\Models\Inputtype;
+use App\Models\Stock;
 use Illuminate\Http\Request;
 
-class InputController extends Controller
+class StockController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($id)
-    {   $inputtype =  Inputtype::find($id);
-        $inputs = Input::with('inputtype')->where('input_type_id','=',$id)->paginate(12);
-        //dd($inputs);
-        return view('/inputs/index',['inputs'=>$inputs, 'id'=>$id, 'name' => $inputtype->name]);
-
+    public function index()
+    {
+        //
     }
 
     /**
@@ -26,9 +22,9 @@ class InputController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($id)
+    public function create()
     {
-        return view('/inputs/create',['id' => $id]);
+        //
     }
 
     /**
@@ -39,25 +35,16 @@ class InputController extends Controller
      */
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'name' => 'required',
-            'id' => 'required'
-        ]);
-        Input::create([
-            'name' => request('name'),
-            'input_type_id' => request('id')
-        ]);
-
-        return back()->with('success', 'Sucessfully inserted a new input!');
+        //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Input  $input
+     * @param  \App\Models\Stock  $stock
      * @return \Illuminate\Http\Response
      */
-    public function show(Input $input)
+    public function show(Stock $stock)
     {
         //
     }
@@ -65,10 +52,10 @@ class InputController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Input  $input
+     * @param  \App\Models\Stock  $stock
      * @return \Illuminate\Http\Response
      */
-    public function edit(Input $input)
+    public function edit(Stock $stock)
     {
         //
     }
@@ -77,10 +64,10 @@ class InputController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Input  $input
+     * @param  \App\Models\Stock  $stock
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Input $input)
+    public function update(Request $request, Stock $stock)
     {
         //
     }
@@ -88,10 +75,10 @@ class InputController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Input  $input
+     * @param  \App\Models\Stock  $stock
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Input $input)
+    public function destroy(Stock $stock)
     {
         //
     }

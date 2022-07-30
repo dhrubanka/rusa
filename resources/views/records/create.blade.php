@@ -72,9 +72,8 @@
                       <label for="fund" class="form-label">Mode of Purchase</label>
                       <select class="form-select" name="mode_of_purchase" id="fund" aria-label="Default select example">
                         <option selected>Select Mode</option>
-                        <option value="RUSA">RUSA</option>
-                        <option value="UGC">UGC</option>
-                        <option value="DONER">DONER</option>
+                        <option value="RUSA">online</option>
+                        <option value="UGC">offline</option> 
                       </select>
                     </div>
                     <div class="mb-3">

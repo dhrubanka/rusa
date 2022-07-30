@@ -8,17 +8,25 @@ use App\Models\Monetary;
 use App\Models\Particular;
 use App\Models\Record;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class RecordController extends Controller
 {
+    public function __construct()  
+    {  
+        // $this->middleware('regular')->only(['create','store', 'show']);  
+   }  
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
+    
     public function index()
     {
-        return view('/records/index');
+        $record = Record::where('user_id',Auth::user()->id)->with('particulars')->with('monetaries')->get();
+        //dd($record);
+        return view('/records/index',['record'=>$record]);
     }
 
     /**
@@ -60,6 +68,7 @@ class RecordController extends Controller
         ]);
 
         $record = Record::create([
+            'user_id' => Auth::user()->id,
             'input_type_id' => request('inputtype'),
             'fund_source' => request('fund'),
             'specification_of_the_asset' => request('specification'),
