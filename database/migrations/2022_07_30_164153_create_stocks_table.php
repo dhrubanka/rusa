@@ -17,8 +17,16 @@ class CreateStocksTable extends Migration
             $table->id();
             $table->unsignedBigInteger('record_id');
             $table->string('name');
-            $table->string('value');
+            $table->string('stock_number');
+            $table->string('issue_person');
+            $table->string('receive_person');
+            $table->string('date_of_receive');
             $table->timestamps();
+
+            $table->foreign('record_id')
+            ->references('id')
+            ->on('records')
+            ->onDelete('cascade');
         });
     }
 

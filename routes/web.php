@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\InputtypeController;
 use App\Http\Controllers\InputController;
 use App\Http\Controllers\RecordController;
+use App\Http\Controllers\StockController;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,7 +44,9 @@ Route::middleware('auth')->group(function () {
             Route::get('/records/create/', [RecordController::class, 'create']);
             Route::post('/records/store', [RecordController::class, 'store']);
             Route::get('/records/show/{id}', [RecordController::class, 'show']);
-            Route::get('/records/getTypes/{id}', [RecordController::class, 'getTypes']);    
+            Route::get('/records/getTypes/{id}', [RecordController::class, 'getTypes']);  
+            //stock
+            Route::get('/stocks/create/{id}',[StockController::class, 'create']);  
     });
 
     Route::middleware('admin')->group(function () {

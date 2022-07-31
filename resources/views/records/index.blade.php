@@ -13,6 +13,7 @@
       @endif     
         <button class="btn btn-success m-1"  onclick="printData()">Print</button> 
         <a href="/records/edit/" class="btn btn-primary m-1">Edit</a> 
+        <a href="/stocks/create/{{$record[0]->id}}" class="btn btn-primary m-1">Stock Create</a> 
     </div>
 
     

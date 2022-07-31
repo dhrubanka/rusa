@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Inputtype;
 use App\Models\Stock;
 use Illuminate\Http\Request;
 
@@ -22,9 +23,11 @@ class StockController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id)
     {
-        //
+        $input_types = Inputtype::all();
+
+        return view('stock/create',['record_id' => $id, 'inputtypes' => $input_types]);
     }
 
     /**
