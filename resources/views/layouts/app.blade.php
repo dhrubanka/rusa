@@ -52,12 +52,19 @@
                                 </li>
                             @endif
                         @else
+                        @if(Auth::user()->is_admin == 1)
+                        <li class="nav-item">
+                            <a class="nav-link" href="/allrecords">All Records</a>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/input-types">Input-Types</a>
+                            </li>
+                        </li>
+                        @else
+                        
                         <li class="nav-item">
                             <a class="nav-link" href="/records">My Record</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/input-types">Input-Types</a>
-                        </li>
+                       @endif
                          
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>

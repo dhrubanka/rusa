@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\AllRecordsController;
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\InputtypeController;
 use App\Http\Controllers\InputController;
@@ -18,27 +20,18 @@ use App\Http\Controllers\StockController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('/login');
 });
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [HomeController::class, 'index']);
 
 
 Route::middleware('auth')->group(function () {
 
     Route::middleware('regular')->group(function () {
-            //input types 
-            Route::get('/input-types', [InputtypeController::class, 'index']);
-            Route::get('/input-types/create', [InputtypeController::class, 'create']);
-            Route::post('/input-types/store', [InputtypeController::class, 'store']);
-            Route::get('/input-types/show/{id}', [InputtypeController::class, 'show']);
-            //input
-            Route::get('/inputs/{id}', [InputController::class, 'index']);
-            Route::get('/inputs/create/{id}', [InputController::class, 'create']);
-            Route::post('/inputs/store', [InputController::class, 'store']);
-            Route::get('/inputs/show/{id}', [InputController::class, 'show']);
+    
             //Record
             Route::get('/records', [RecordController::class, 'index']);
             Route::get('/records/create/', [RecordController::class, 'create']);
@@ -48,10 +41,25 @@ Route::middleware('auth')->group(function () {
             //stock
             Route::get('/stocks/create/{id}',[StockController::class, 'create']);  
             Route::post('/stocks/store',[StockController::class, 'store']);  
+            Route::get('/stocks/getTypes/{id}', [StockController::class, 'getTypes']);  
+
+          
     });
 
     Route::middleware('admin')->group(function () {
-        
+            Route::get('/allrecords',[AllRecordsController::class, 'index']);
+            Route::get('/org/{id}',[AllRecordsController::class, 'show']);
 
+                    //input types 
+                    Route::get('/input-types', [InputtypeController::class, 'index']);
+                    Route::get('/input-types/create', [InputtypeController::class, 'create']);
+                    Route::post('/input-types/store', [InputtypeController::class, 'store']);
+                    Route::get('/input-types/show/{id}', [InputtypeController::class, 'show']);
+                    //input
+                    Route::get('/inputs/{id}', [InputController::class, 'index']);
+                    Route::get('/inputs/create/{id}', [InputController::class, 'create']);
+                    Route::post('/inputs/store', [InputController::class, 'store']);
+                    Route::get('/inputs/show/{id}', [InputController::class, 'show']);
     });
+    
 });

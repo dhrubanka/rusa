@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Input;
 use App\Models\Inputtype;
+use App\Models\Record;
 use App\Models\Stock;
 use Illuminate\Http\Request;
 
@@ -13,11 +15,16 @@ class StockController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function getTypes(Request $request, $id)
     {
-        //
-    }
 
+        echo json_encode(['inputs' => Input::where('input_type_id', '=', $id)->get()]);;
+    }
+    public function stockCount(Request $request, $name)
+    {
+
+        echo json_encode(['inputs' => Input::where('input_type_id', '=', $id)->get()]);;
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -25,6 +32,9 @@ class StockController extends Controller
      */
     public function create($id)
     {
+        // $record = Record::find($id);
+        // $stock = Stock::where('record_id','=', $id)->sum('stock_number');
+        // dd($stock);
         $input_types = Inputtype::all();
 
         return view('stock/create',['record_id' => $id, 'inputtypes' => $input_types]);

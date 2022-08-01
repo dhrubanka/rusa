@@ -84,15 +84,16 @@
           $('#monetary').empty();
           $.ajax({
               type: 'GET',
-              url: '/records/getTypes/' + id,
+              url: '/stocks/getTypes/' + id,
               success: function(response) {
+                console.log(response);
                   var response = JSON.parse(response);
-                  console.log(response);
+                  console.log(response['inputs']);
                   $('#particulars').empty();
-                 
+                  var inputs = response['inputs'];
                   var i = 0;
                   var options = ``;
-                  response.forEach(element => {
+                  inputs.forEach(element => {
                     // $('#particulars').append(
                     //       `<option value="${element['name']}">${element['name']}</option>`
                     //   );
@@ -100,15 +101,12 @@
                     i++;
                    
                   });
-                  console.log(options);
+                  // console.log(options);
                   $('#particulars').append(
-                 `  
-                    <hr><label for="1" class="form-label"> Name of Stock </label> 
+                 `  <hr><label for="1" class="form-label"> Name of Stock </label> 
                     </br>
-                    <select class="form-select" name="name" >
-                    <option selected> Select Stock </option>
-                 
-                    `+ options + `</select>`
+                    <select class="form-select" id="abc" name="name" >
+                    <option selected> Select Stock </option> `+ options + `</select>`
                   ); 
                  
                   
@@ -116,6 +114,13 @@
               }
           });
       });
+      $('#abc').change(function(e){
+       // Your event handler
+       console.log("some");
+    });
+
+    // And now fire change event when the DOM is ready
+    $('#abc').trigger('change');
   });
   </script>
 @endsection
