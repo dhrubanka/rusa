@@ -4,7 +4,7 @@
 <div class="container" >
    
     <div class="d-flex flex-row-reverse  ">
-      @if ($record)
+      @if ($record->isNotEmpty())
         <button class="btn btn-success m-1"  onclick="printData()">Print</button> 
         <a href="/records/edit/" class="btn btn-danger m-1">Edit</a> 
         <a href="/stocks/create/{{$record[0]->id}}" class="btn btn-primary m-1">Stock Create</a> 
@@ -12,7 +12,7 @@
         <a href="/records/create" class="btn btn-primary m-1"> Record Entry</a></div>
       @endif
     </div>
-
+    @if ($record->isNotEmpty())
     <div  id="printTable">
     <table class="table ">
         <thead>
@@ -115,6 +115,11 @@
       </body>
     </table>
   </div>
+  @else  <div class="text-center p-5" >
+        <h1>No Record Found !
+         <br> Enter your Record</h1>
+        </div>
+      @endif
 </div class="mb-5">
 <script>
 function printData()
