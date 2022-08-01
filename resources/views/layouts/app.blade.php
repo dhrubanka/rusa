@@ -53,14 +53,12 @@
                             @endif
                         @else
                         <li class="nav-item">
-                            <a class="nav-link" href="/records">Records</a>
+                            <a class="nav-link" href="/records">My Record</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="/input-types">Input-Types</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/inputs">Inputs</a>
-                        </li>
+                         
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }}

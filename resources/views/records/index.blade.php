@@ -4,23 +4,20 @@
 <div class="container" >
    
     <div class="d-flex flex-row-reverse  ">
-      @if ($record== null)
-          
-       
-
-        <a href="/records/create" class="btn btn-primary m-1"> Create New Record</a></div>
-       
-      @endif     
+      @if ($record)
         <button class="btn btn-success m-1"  onclick="printData()">Print</button> 
-        <a href="/records/edit/" class="btn btn-primary m-1">Edit</a> 
+        <a href="/records/edit/" class="btn btn-danger m-1">Edit</a> 
         <a href="/stocks/create/{{$record[0]->id}}" class="btn btn-primary m-1">Stock Create</a> 
+      @else  
+        <a href="/records/create" class="btn btn-primary m-1"> Record Entry</a></div>
+      @endif
     </div>
 
-    
-    <table class="table " id="printTable">
+    <div  id="printTable">
+    <table class="table ">
         <thead>
             <tr>
-              <h3>My Record</h3>
+              <h3 class="text-center">My Record</h3>
             </tr>
           </thead>
           <tbody>
@@ -93,7 +90,32 @@
 
           </tbody>
     </table>
-</div>
+    <h3>Stocks</h3>
+    <table  class="table">
+      <thead>
+        <tr>
+          <th scope="col">Stock Name</th>
+          <th scope="col">Stock Number</th>
+          <th scope="col">Issue Person</th>
+          <th scope="col">Receive Person</th>
+          <th scope="col">Date of Receive</th>
+        </tr>
+      </thead>
+      <tbody>
+         
+        @foreach ($record[0]->stocks as $stock)
+        <tr>
+            <td>{{$stock->name}}</td>  
+            <td>{{$stock->stock_number}}</td>  
+            <td>{{$stock->issue_person}}</td>  
+            <td>{{$stock->receive_person}}</td>  
+            <td>{{$stock->date_of_receive}}</td>  
+        </tr>
+        @endforeach
+      </body>
+    </table>
+  </div>
+</div class="mb-5">
 <script>
 function printData()
 {

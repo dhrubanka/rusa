@@ -23,4 +23,8 @@ class Record extends Model
     public function particulars(){
         return $this->hasMany('App\Models\Particular', 'record_id', 'id');
     }
+
+    public function stocks(){
+        return $this->hasMany('App\Models\Stock', 'record_id', 'id');
+    }
 }

@@ -47,6 +47,7 @@ Route::middleware('auth')->group(function () {
             Route::get('/records/getTypes/{id}', [RecordController::class, 'getTypes']);  
             //stock
             Route::get('/stocks/create/{id}',[StockController::class, 'create']);  
+            Route::post('/stocks/store',[StockController::class, 'store']);  
     });
 
     Route::middleware('admin')->group(function () {

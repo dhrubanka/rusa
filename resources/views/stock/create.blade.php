@@ -32,7 +32,7 @@
                  <h5 class="card-title col-12 col-md-8">Insert Record</h5>
              </div>
              <div class="card-body" >
-                 <form method="POST" action="/records/store">
+                 <form method="POST" action="/stocks/store">
                     @csrf
                     <div class="mb-3">
                       <label for="fund" class="form-label">Input Types</label>
@@ -47,14 +47,18 @@
                       <div id="particulars"></div>
                     </div>
                      
-                    <input type="text" class="form-control" name="record_id" value="{{$record_id}}" id="exampleInputEmail1" aria-describedby="emailHelp">
+                    <input type="hidden" class="form-control" name="record_id" value="{{$record_id}}" id="exampleInputEmail1" aria-describedby="emailHelp">
                     <div class="mb-3">
                         <label for="exampleInputEmail1" class="form-label">Stock Number</label>
                         <input type="text" class="form-control" name="stock_number" id="exampleInputEmail1" aria-describedby="emailHelp">
                       </div>
+                      <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Issue Person</label>
+                        <input type="text" class="form-control" name="issue_person" id="exampleInputEmail1" aria-describedby="emailHelp">
+                      </div>
                     <div class="mb-3">
                       <label for="exampleInputEmail1" class="form-label">Receive Person</label>
-                      <input type="text" class="form-control" name="unique_id" id="exampleInputEmail1" aria-describedby="emailHelp">
+                      <input type="text" class="form-control" name="receive_person" id="exampleInputEmail1" aria-describedby="emailHelp">
                     </div>
                   
                      
@@ -85,27 +89,29 @@
                   var response = JSON.parse(response);
                   console.log(response);
                   $('#particulars').empty();
-                  $('#particulars').append(
-                 `  
-                    <hr><label for="1" class="form-label"> Name of Stock </label> 
-                    </br>
-                    <select class="form-select" name="name" id="1" aria-label="Default select example">
-                    <option selected> Select </option>
                  
-                    `
-                  ); 
                   var i = 0;
+                  var options = ``;
                   response.forEach(element => {
                     // $('#particulars').append(
                     //       `<option value="${element['name']}">${element['name']}</option>`
                     //   );
-                    var options += `<option value="${element['name']}">${element['name']}</option>`;
+                    options +=  `<option value="${element['name']}">${element['name']}</option>`;
                     i++;
                    
                   });
-                  $('#particulars').append(options);
+                  console.log(options);
                   $('#particulars').append(
-                 ` </select> `);
+                 `  
+                    <hr><label for="1" class="form-label"> Name of Stock </label> 
+                    </br>
+                    <select class="form-select" name="name" >
+                    <option selected> Select Stock </option>
+                 
+                    `+ options + `</select>`
+                  ); 
+                 
+                  
                   
               }
           });

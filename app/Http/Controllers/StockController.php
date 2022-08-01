@@ -38,7 +38,29 @@ class StockController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //dd($request);
+        $validatedData = $request->validate([
+            'record_id' => 'required',
+            'name' => 'required',
+            'stock_number' => 'required',
+            'issue_person' => 'required',
+            'receive_person' => 'required',
+            'date_of_receive' => 'required', 
+        ]);
+
+        $stock = Stock::create([
+             
+            'record_id' => request('record_id'),
+            'name' => request('name'),
+            'stock_number' => request('stock_number'),
+            'issue_person' => request('issue_person'),
+            'receive_person' => request('receive_person'),
+            'date_of_receive' => request('date_of_receive')
+        ]);
+
+         
+
+        return back()->with('success', 'Sucessfully inserted !');
     }
 
     /**
