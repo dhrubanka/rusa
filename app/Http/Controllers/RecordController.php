@@ -26,7 +26,7 @@ class RecordController extends Controller
     {
         $record = Record::where('user_id',Auth::user()->id)->with('particulars')->with('monetaries')->get();
         //dd($record);
-        return view('/records/index',['record'=>$record]);
+        return view('/records/index',['records'=>$record]);
     }
 
     /**
@@ -106,9 +106,20 @@ class RecordController extends Controller
      * @param  \App\Models\Record  $record
      * @return \Illuminate\Http\Response
      */
-    public function show(Record $record)
+    public function show($id)
     {
-        //
+        
+        $record = Record::where('id',$id)->with('particulars')->with('monetaries')->get();
+        //dd($record);
+        if($record->isNotEmpty()){
+                if(  (Auth::user()->id == $record[0]->user_id)){
+                    return view('/records/show',['record'=>$record]);
+                }else{
+                    abort(403);
+                }
+        }else{
+                 return view('/records/show',['record'=>$record]);
+        }
     }
 
     /**

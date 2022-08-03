@@ -62,7 +62,7 @@
                         @else
                         
                         <li class="nav-item">
-                            <a class="nav-link" href="/records">My Record</a>
+                            <a class="nav-link" href="/records">My Records</a>
                         </li>
                        @endif
                          

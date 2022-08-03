@@ -23,9 +23,14 @@ Route::get('/', function () {
     return redirect('/login');
 });
 
-Auth::routes();
-
-Route::get('/home', [HomeController::class, 'index']);
+Auth::routes(); 
+Route::get('/home',function () {
+    if(Auth::user()->is_admin){
+    return redirect('/allrecords');
+}else{
+    return redirect('/records');
+}
+});
 
 
 Route::middleware('auth')->group(function () {
