@@ -7,6 +7,7 @@ use App\Models\Inputtype;
 use App\Models\Record;
 use App\Models\Stock;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class StockController extends Controller
 {
@@ -30,14 +31,17 @@ class StockController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($id)
-    {
+    public function create(Request $request)
+    {   
+        $record_id = request('record_id');
+        $available = request('available');
+        $name = request('name');
         // $record = Record::find($id);
         // $stock = Stock::where('record_id','=', $id)->sum('stock_number');
-        // dd($stock);
+        //dd($request);
         $input_types = Inputtype::all();
 
-        return view('stock/create',['record_id' => $id, 'inputtypes' => $input_types]);
+        return view('stock/create', ['record_id' => $record_id, 'available' => $available, 'name' => $name]);
     }
 
     /**
@@ -53,7 +57,7 @@ class StockController extends Controller
             'record_id' => 'required',
             'name' => 'required',
             'stock_number' => 'required',
-            'issue_person' => 'required',
+             
             'receive_person' => 'required',
             'date_of_receive' => 'required', 
         ]);
@@ -63,14 +67,12 @@ class StockController extends Controller
             'record_id' => request('record_id'),
             'name' => request('name'),
             'stock_number' => request('stock_number'),
-            'issue_person' => request('issue_person'),
+            'issue_person' => Auth::user()->name,
             'receive_person' => request('receive_person'),
             'date_of_receive' => request('date_of_receive')
         ]);
 
-         
-
-        return back()->with('success', 'Sucessfully inserted !');
+        return redirect('/stocks/'.request('record_id'));
     }
 
     /**
@@ -79,9 +81,25 @@ class StockController extends Controller
      * @param  \App\Models\Stock  $stock
      * @return \Illuminate\Http\Response
      */
-    public function show(Stock $stock)
-    {
-        //
+    public function index($id)
+    {   
+        $total_stocks = Record::where('id',$id)->with('particulars')->with('monetaries')->with('stocks')->first();
+        $particulars = $total_stocks->particulars;
+        $total = $total_stocks->particulars->sum('value');
+        foreach($particulars as $particular){
+            $stock_sum = Stock::where('record_id', $id)->where('name', $particular->name)->sum('stock_number');
+            //array_push($particular, ['used' => $stock_sum]);
+            $particular->used = $stock_sum;
+            $particular->available = $particular->value - $stock_sum;
+           // print('used'.$stock_sum);
+          //  print($particular.'\n');
+        }
+       // print($particulars);
+        // $mon = $total_stocks->particulars->sum('value');
+        $stocks = Stock::where('record_id',$id)->get();
+        $used = $stocks->sum('stock_number');
+       // dd($stocks);
+        return view('stock/index', ['stocks'=>$stocks, 'total'=> $total, 'used'=>$used, 'free'=>($total-$used), 'particulars'=>$particulars, 'record_id'=>$id]);
     }
 
     /**

@@ -29,33 +29,20 @@
         </div>
          <div class="card col-12 offset-md-2 col-md-8">
              <div class="card-header row" style="padding-top: 25px;">
-                 <h5 class="card-title col-12 col-md-8">Insert Record</h5>
+                 <h5 class="card-title col-12 col-md-8">Issue Stock of {{$name}}</h5>
              </div>
              <div class="card-body" >
                  <form method="POST" action="/stocks/store">
                     @csrf
-                    <div class="mb-3">
-                      <label for="fund" class="form-label">Input Types</label>
-                      <select class="form-select" name="inputtype" id="inputtype" aria-label="Default select example">
-                        <option selected>Select Input Type</option>
-                        @foreach ($inputtypes as $input)
-                          <option value="{{$input->id}}">{{$input->name}}</option>
-                        @endforeach
-                      </select>
-                    </div>
-                    <div class="mb-3">
-                      <div id="particulars"></div>
-                    </div>
+                    <input type="hidden" class="form-control" name="name" value="{{$name}}">
+                    <input type="hidden" class="form-control" name="available" value="{{$available}}">
                      
                     <input type="hidden" class="form-control" name="record_id" value="{{$record_id}}" id="exampleInputEmail1" aria-describedby="emailHelp">
                     <div class="mb-3">
-                        <label for="exampleInputEmail1" class="form-label">Stock Number</label>
-                        <input type="text" class="form-control" name="stock_number" id="exampleInputEmail1" aria-describedby="emailHelp">
+                        <label for="exampleInputEmail1" class="form-label">Stock Quantity</label>
+                        <input type="number" class="form-control" name="stock_number" max="{{$available}}" placeholder=" Quantity Should not exceed {{$available}}" >
                       </div>
-                      <div class="mb-3">
-                        <label for="exampleInputEmail1" class="form-label">Issue Person</label>
-                        <input type="text" class="form-control" name="issue_person" id="exampleInputEmail1" aria-describedby="emailHelp">
-                      </div>
+                   
                     <div class="mb-3">
                       <label for="exampleInputEmail1" class="form-label">Receive Person</label>
                       <input type="text" class="form-control" name="receive_person" id="exampleInputEmail1" aria-describedby="emailHelp">
@@ -67,7 +54,7 @@
                       <input type="date" class="form-control" name="date_of_receive" id="exampleInputEmail1" aria-describedby="emailHelp">
                     </div>
                     <div class="form-group">
-                      <button type="submit" class="btn btn-primary">Create</button>
+                      <button type="submit" class="btn btn-primary">Issue</button>
                     </div>
                  </form>
             </div>
@@ -76,51 +63,5 @@
           
      </div>
 </div>
-<script>
-  $(document).ready(function() {
-      $('#inputtype').on('change', function() {
-          let id = $(this).val();
-          $('#particulars').empty();
-          $('#monetary').empty();
-          $.ajax({
-              type: 'GET',
-              url: '/stocks/getTypes/' + id,
-              success: function(response) {
-                console.log(response);
-                  var response = JSON.parse(response);
-                  console.log(response['inputs']);
-                  $('#particulars').empty();
-                  var inputs = response['inputs'];
-                  var i = 0;
-                  var options = ``;
-                  inputs.forEach(element => {
-                    // $('#particulars').append(
-                    //       `<option value="${element['name']}">${element['name']}</option>`
-                    //   );
-                    options +=  `<option value="${element['name']}">${element['name']}</option>`;
-                    i++;
-                   
-                  });
-                  // console.log(options);
-                  $('#particulars').append(
-                 `  <hr><label for="1" class="form-label"> Name of Stock </label> 
-                    </br>
-                    <select class="form-select" id="abc" name="name" >
-                    <option selected> Select Stock </option> `+ options + `</select>`
-                  ); 
-                 
-                  
-                  
-              }
-          });
-      });
-      $('#abc').change(function(e){
-       // Your event handler
-       console.log("some");
-    });
-
-    // And now fire change event when the DOM is ready
-    $('#abc').trigger('change');
-  });
-  </script>
+ 
 @endsection

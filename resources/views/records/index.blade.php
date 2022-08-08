@@ -25,7 +25,7 @@
              
               <td>{{$record->id}}</td>
               <td>{{$record->created_at}}</td>
-              <td><a href="/records/show/{{$record->id}}" class="btn btn-primary">View Record</a> <a class="btn btn-success">Edit</a> <a class="btn btn-danger">Delete</a></td>
+              <td><a href="/records/show/{{$record->id}}" class="btn btn-primary">View Record</a> <a class="btn btn-success" href="/records/edit/{{$record->id}}">Edit</a> <a class="btn btn-danger">Delete</a></td>
               
             </tr>
             @endforeach

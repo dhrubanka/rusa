@@ -29,12 +29,13 @@
         </div>
          <div class="card col-12 offset-md-2 col-md-8">
              <div class="card-header row" style="padding-top: 25px;">
-                 <h5 class="card-title col-12 col-md-8">Insert Record</h5>
+                 <h5 class="card-title col-12 col-md-8">Update Record</h5>
              </div>
              <div class="card-body" >
-                 <form method="POST" action="/records/store">
+                 <form method="POST" action="/records/update/{{$record->id}}">
                     @csrf
-                    <div class="mb-3">
+                    @method('PUT')
+                    {{-- <div class="mb-3">
                       <label for="fund" class="form-label">Input Types</label>
                       <select class="form-select" name="inputtype" id="inputtype" aria-label="Default select example">
                         <option selected>Select Input Type</option>
@@ -48,32 +49,32 @@
                     </div>
                     <div class="mb-3">
                       <div id="monetary"></div>
-                    </div>
+                    </div> --}}
                     <div class="mb-3">
                       <label for="fund" class="form-label">Source of Fund</label>
                       <select class="form-select" name="fund" id="fund" aria-label="Default select example">
                         <option selected>Select Source</option>
-                        <option value="RUSA">RUSA</option>
-                        <option value="UGC">UGC</option>
-                        <option value="LOCAL_AREA_DEVELOPMENT_FUND">Local Area Development Fund</option>
-                        <option value="ALUMNI">ALUMNI</option>
-                        <option value="DONER">DONER</option>
+                        <option value="RUSA" @if($record->fund_source == "RUSA")selected='selected' @endif>RUSA</option>
+                        <option value="UGC" @if($record->fund_source == "UGC")selected='selected' @endif>UGC</option>
+                        <option value="LOCAL_AREA_DEVELOPMENT_FUND" @if($record->fund_source == "LOCAL_AREA_DEVELOPMENT_FUND")selected='selected' @endif>Local Area Development Fund</option>
+                        <option value="ALUMNI" @if($record->fund_source == "ALUMNI")selected='selected' @endif>ALUMNI</option>
+                        <option value="DONER" @if($record->fund_source == "DONER")selected='selected' @endif>DONER</option>
                       </select>
                     </div>
                     <div class="mb-3">
                       <label for="exampleFormControlTextarea1" class="form-label">Specification of the Asset</label>
-                      <textarea class="form-control" name="specification" id="exampleFormControlTextarea1" rows="3"></textarea>
+                      <textarea class="form-control" name="specification" id="exampleFormControlTextarea1" rows="3">{{$record->specification_of_the_asset}}</textarea>
                     </div>
                     <div class="mb-3">
                       <label for="exampleInputEmail1" class="form-label">Unique ID of the stock to be generated</label>
-                      <input type="text" class="form-control" name="unique_id" id="exampleInputEmail1" aria-describedby="emailHelp">
+                      <input type="text" class="form-control" name="unique_id" id="exampleInputEmail1" value="{{$record->unique_id}}" aria-describedby="emailHelp">
                     </div>
                     <div class="mb-3">
                       <label for="fund" class="form-label">Mode of Purchase</label>
                       <select class="form-select" name="mode_of_purchase" id="fund" aria-label="Default select example">
                         <option selected>Select Mode</option>
-                        <option value="RUSA">online</option>
-                        <option value="UGC">offline</option> 
+                        <option value="online"  @if($record->mode_of_purchase == "online") selected='selected' @endif>online</option>
+                        <option value="offline"  @if($record->mode_of_purchase == "offline") selected='selected' @endif>offline</option> 
                       </select>
                     </div>
                     <div class="mb-3">
@@ -82,10 +83,10 @@
                     </div>
                     <div class="mb-3">
                       <label for="exampleInputEmail1" class="form-label">Date of Purchase</label>
-                      <input type="date" class="form-control" name="date_of_purchase" id="exampleInputEmail1" aria-describedby="emailHelp">
+                      <input type="date" class="form-control" value="{{$record->date_of_purchase}}" name="date_of_purchase" id="exampleInputEmail1" aria-describedby="emailHelp">
                     </div>
                     <div class="form-group">
-                      <button type="submit" class="btn btn-primary">Create</button>
+                      <button type="submit" class="btn btn-primary">Update</button>
                     </div>
                  </form>
             </div>
@@ -95,52 +96,42 @@
      </div>
 </div>
 <script>
-  $(document).ready(function() {
-      $('#inputtype').on('change', function() {
-          let id = $(this).val();
-          $('#particulars').empty();
-          $('#monetary').empty();
-          $.ajax({
+$(document).ready(function() {
+    $('#inputtype').on('change', function() {
+        let id = $(this).val();
+        $('#particulars').empty();
+        $('#monetary').empty();
+        $.ajax({
               type: 'GET',
               url: '/records/getTypes/' + id,
               success: function(response) {
                   var response = JSON.parse(response);
                   console.log(response);
                   $('#particulars').empty();
-                  $('#particulars').append(
-                 ` <hr><label for="exampleInputEmail1" class="form-label">Particulars of the Asset</label> </br>`
-                  );
+                  $('#particulars').append(`<hr><label for="exampleInputEmail1" class="form-label">Particulars of the Asset</label> </br>`);
                   $('#monetary').empty();
-                  $('#monetary').append(
-                 ` <hr><label for="exampleInputEmail1" class="form-label">Monetary Values of the Asset</label> </br>`
-                  );
+                  $('#monetary').append(`<hr><label for="exampleInputEmail1" class="form-label">Monetary Values of the Asset</label> </br>`);
                   var i = 0;
                   response.forEach(element => {
                   console.log(element['name']);
                   $('#particulars').append(
-                    `<label for="particular" class="form-label">${element['name']}</label>`
                     `<label for="${element['id']}" class="form-label">${element['name']}</label>
-                     <input type="hidden" class="form-control" placeholder="Quanity in numbers" name="particulars[`+i+`][name]" value="${element['name']}" id="${element['id']}">
-                     <input type="text" class="form-control" placeholder="Quanity in numbers" name="particulars[`+i+`][value]" id="${element['id']}">`
-                    );
-                    i++;
+                    <input type="hidden" class="form-control" placeholder="Quanity in numbers" name="particulars[`+i+`][name]" value="${element['name']}" id="${element['id']}">
+                    <input type="text" class="form-control" placeholder="Quanity in numbers" name="particulars[`+i+`][value]" id="${element['id']}">
+                    ` );
+                  i++;
                   });
-
                   var j = 0;
                   response.forEach(element => {
-                    console.log(element['name']);
-                      $('#monetary').append(
-                           
-                          // ` <label for="particular" class="form-label">${element['name']}</label>`
-                          `<label for="${element['id']}" class="form-label">${element['name']}</label>
-                          <input type="hidden" class="form-control" placeholder="Quanity in numbers" name="monetary[`+j+`][name]" value="${element['name']}" id="${element['id']}">
-                          <input type="text" class="form-control" placeholder="Quanity in numbers" name="monetary[`+j+`][value]" id="${element['id']}">`
-
-                      );
-                      j++;
+                  console.log(element['name']);
+                  $('#monetary').append(
+                    `<label for="${element['id']}" class="form-label">${element['name']}</label>
+                    <input type="hidden" class="form-control" placeholder="Quanity in numbers" name="monetary[`+j+`][name]" value="${element['name']}" id="${element['id']}">
+                    <input type="text" class="form-control" placeholder="Quanity in numbers" name="monetary[`+j+`][value]" id="${element['id']}">`
+                  );
+                  j++;
                   });
                   $('#monetary').append(`<hr>`);
-                  
               }
           });
       });

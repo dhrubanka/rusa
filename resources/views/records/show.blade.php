@@ -6,8 +6,8 @@
     <div class="d-flex flex-row-reverse  ">
       @if ($record->isNotEmpty())
         <button class="btn btn-success m-1"  onclick="printData()">Print</button> 
-        <a href="/records/edit/" class="btn btn-danger m-1">Edit</a> 
-        <a href="/stocks/create/{{$record[0]->id}}" class="btn btn-primary m-1">Stock Create</a> 
+        <a href="/records/edit/{{$record[0]->id}}" class="btn btn-danger m-1">Edit</a> 
+        <a href="/stocks/{{$record[0]->id}}" class="btn btn-primary m-1">Stocks</a> 
       @else  
         <a href="/records/create" class="btn btn-primary m-1">Record Entry</a></div>
       @endif

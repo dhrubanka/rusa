@@ -15,7 +15,7 @@ class RecordController extends Controller
     public function __construct()  
     {  
         // $this->middleware('regular')->only(['create','store', 'show']);  
-   }  
+    }  
     /**
      * Display a listing of the resource.
      *
@@ -108,8 +108,7 @@ class RecordController extends Controller
      */
     public function show($id)
     {
-        
-        $record = Record::where('id',$id)->with('particulars')->with('monetaries')->get();
+         $record = Record::where('id',$id)->with('particulars')->with('monetaries')->get();
         //dd($record);
         if($record->isNotEmpty()){
                 if(  (Auth::user()->id == $record[0]->user_id)){
@@ -128,9 +127,12 @@ class RecordController extends Controller
      * @param  \App\Models\Record  $record
      * @return \Illuminate\Http\Response
      */
-    public function edit(Record $record)
+    public function edit(Record $record, $id)
     {
-        //
+        $record = Record::find($id);
+        //dd($record);
+        $inputtypes = Inputtype::all();
+        return view('/records/edit',['record'=> $record, 'inputtypes'=>$inputtypes]);
     }
 
     /**
@@ -140,9 +142,21 @@ class RecordController extends Controller
      * @param  \App\Models\Record  $record
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Record $record)
+    public function update(Request $request, $id)
     {
-        //
+        $record = Record::find($id);
+        //dd('gg');
+        $record->update([
+            
+            // 'input_type_id' => request('inputtype'),
+            'fund_source' => request('fund'),
+            'specification_of_the_asset' => request('specification'),
+            'unique_id' => request('unique_id'),
+            'mode_of_purchase' => request('mode_of_purchase'),
+            'date_of_purchase' => request('date_of_purchase')
+        ]);
+
+        return back()->with('success', 'Successfully updated!');
     }
 
     /**
