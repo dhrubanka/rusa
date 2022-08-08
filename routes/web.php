@@ -26,7 +26,6 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home',function () {
-    
     if(Auth::user()->is_admin){
         return redirect('/allrecords');
     }else{
@@ -37,7 +36,6 @@ Route::get('/home',function () {
 
 
 Route::middleware('auth')->group(function () {
-
     Route::middleware('regular')->group(function () {
            //Record
             Route::get('/records', [RecordController::class, 'index']);
@@ -47,6 +45,7 @@ Route::middleware('auth')->group(function () {
             Route::get('/records/getTypes/{id}', [RecordController::class, 'getTypes']); 
             Route::get('/records/edit/{id}', [RecordController::class, 'edit']); 
             Route::put('/records/update/{id}', [RecordController::class, 'update']);
+            Route::get('/records/delete/{id}', [RecordController::class, 'destroy']);
             //stock
             Route::get('/stocks/{id}',[StockController::class, 'index']);  
             Route::post('/stocks/create/',[StockController::class, 'create']);  

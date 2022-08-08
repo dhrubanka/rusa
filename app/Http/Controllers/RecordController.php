@@ -165,8 +165,11 @@ class RecordController extends Controller
      * @param  \App\Models\Record  $record
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Record $record)
+    public function destroy(Request $request,$id)
     {
-        //
+        $record = Record::find($id);
+        $record->delete();
+
+        return redirect('/records');
     }
 }

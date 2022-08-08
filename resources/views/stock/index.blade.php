@@ -27,14 +27,16 @@
  <div><h5>Total {{$particular->name}} stocks: <b> {{$particular->value}} </b>,
     Used Stocks : <b> {{$particular->used}} </b>,
     Available Stocks: <b> {{$particular->available}} </b>
+    @if($particular->available != 0)
     <form method="POST" action="/stocks/create/" >
-    @csrf
-    <input type="hidden" class="hidden" name="name" value="{{$particular->name}}">
-    <input type="hidden" class="hidden" name="available" value="{{$particular->available}}">
-    <input type="hidden" class="hidden" name="record_id" value="{{$record_id}}">
-    <button type="submit" class="btn btn-primary">ISSUE THIS STOCK</button>
-    </h5> 
+        @csrf
+        <input type="hidden" class="hidden" name="name" value="{{$particular->name}}">
+        <input type="hidden" class="hidden" name="available" value="{{$particular->available}}">
+        <input type="hidden" class="hidden" name="record_id" value="{{$record_id}}">
+        <button type="submit" class="btn btn-primary">ISSUE THIS STOCK</button>
+        </h5> 
     </form>
+    @endif
 </div>
 
 @endforeach
