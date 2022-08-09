@@ -116,14 +116,13 @@
                   );
                   var i = 0;
                   response.forEach(element => {
-                  console.log(element['name']);
-                  $('#particulars').append(
-                    `<label for="particular" class="form-label">${element['name']}</label>`
+                   console.log(element['name']);
+                   $('#particulars').append(
                     `<label for="${element['id']}" class="form-label">${element['name']}</label>
-                     <input type="hidden" class="form-control" placeholder="Quanity in numbers" name="particulars[`+i+`][name]" value="${element['name']}" id="${element['id']}">
-                     <input type="text" class="form-control" placeholder="Quanity in numbers" name="particulars[`+i+`][value]" id="${element['id']}">`
-                    );
-                    i++;
+                    <input type="hidden" class="form-control" placeholder="Quanity in numbers" name="particulars[`+i+`][name]" value="${element['name']}" id="${element['id']}">
+                    <input type="text" class="form-control" placeholder="Quanity in numbers" name="particulars[`+i+`][value]" id="${element['id']}">`
+                   );
+                   i++;
                   });
 
                   var j = 0;
