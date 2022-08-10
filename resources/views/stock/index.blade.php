@@ -32,7 +32,7 @@
         @csrf
         <input type="hidden" class="hidden" name="name" value="{{$particular->name}}">
         <input type="hidden" class="hidden" name="available" value="{{$particular->available}}">
-        <input type="hidden" class="hidden" name="record_id" value="{{$record_id}}">
+        <input type="hidden" class="hidden" name="user_id" value="{{$user_id}}">
         <button type="submit" class="btn btn-primary">ISSUE THIS STOCK</button>
         </h5> 
     </form>

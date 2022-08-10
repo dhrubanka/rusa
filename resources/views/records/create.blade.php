@@ -26,6 +26,15 @@
               </div>
             </div>
         @endif
+        @if (count($errors) > 0)
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
         </div>
          <div class="card col-12 offset-md-2 col-md-8">
              <div class="card-header row" style="padding-top: 25px;">

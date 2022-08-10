@@ -54,7 +54,7 @@ class StockController extends Controller
     {
         //dd($request);
         $validatedData = $request->validate([
-            'record_id' => 'required',
+            
             'name' => 'required',
             'stock_number' => 'required',
              
@@ -64,7 +64,7 @@ class StockController extends Controller
 
         $stock = Stock::create([
              
-            'record_id' => request('record_id'),
+            'user_id' =>Auth::user()->id,
             'name' => request('name'),
             'stock_number' => request('stock_number'),
             'issue_person' => Auth::user()->name,
@@ -81,13 +81,37 @@ class StockController extends Controller
      * @param  \App\Models\Stock  $stock
      * @return \Illuminate\Http\Response
      */
-    public function index($id)
+    public function index()
     {   
-        $total_stocks = Record::where('id',$id)->with('particulars')->with('monetaries')->with('stocks')->first();
-        $particulars = $total_stocks->particulars;
-        $total = $total_stocks->particulars->sum('value');
+        $total_stocks = Record::where('user_id', Auth::user()->id)->with('particulars')->with('monetaries')->get();
+        //dd($total_stocks);
+        if($total_stocks[0]){
+            $particulars = $total_stocks[0]->particulars;
+        }
+        $sum  = 0;
+        $found = 0;
+        foreach($total_stocks as $total_stock){
+            foreach($total_stock->particulars as $particular){
+                    foreach($particulars as $p){
+                        if($p->name == $particular->name ){
+                            $p->value += $particular->value;
+                            $found = 1;
+                        }
+                    }
+                    if($found==0){
+                        $particulars->push($particular);
+                    }
+                    
+                    $sum += $particular->stock_number;
+            }
+            $found = 0;
+         //   print($total_stock->particulars);
+        }
+        //print($particulars);
+       // $particulars = $total_stocks->particulars;
+        $total = $particulars->sum('value');
         foreach($particulars as $particular){
-            $stock_sum = Stock::where('record_id', $id)->where('name', $particular->name)->sum('stock_number');
+            $stock_sum = Stock::where('user_id', Auth::user()->id)->where('name', $particular->name)->sum('stock_number');
             //array_push($particular, ['used' => $stock_sum]);
             $particular->used = $stock_sum;
             $particular->available = $particular->value - $stock_sum;
@@ -96,10 +120,10 @@ class StockController extends Controller
         }
        // print($particulars);
         // $mon = $total_stocks->particulars->sum('value');
-        $stocks = Stock::where('record_id',$id)->get();
+        $stocks = Stock::where('user_id',Auth::user()->id)->get();
         $used = $stocks->sum('stock_number');
        // dd($stocks);
-        return view('stock/index', ['stocks'=>$stocks, 'total'=> $total, 'used'=>$used, 'free'=>($total-$used), 'particulars'=>$particulars, 'record_id'=>$id]);
+        return view('stock/index', ['stocks'=>$stocks, 'total'=> $total, 'used'=>$used, 'free'=>($total-$used), 'particulars'=>$particulars, 'user_id'=>Auth::user()->id]);
     }
 
     /**

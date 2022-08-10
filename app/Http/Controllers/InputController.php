@@ -40,7 +40,7 @@ class InputController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'name' => 'required',
+            'name' => 'required|unique:inputs',
             'id' => 'required'
         ]);
         Input::create([

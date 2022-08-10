@@ -40,7 +40,7 @@ class InputtypeController extends Controller
 
         //dd($request);
         $validatedData = $request->validate([
-            'name' => 'required'
+            'name' => 'required|unique:inputtypes'
         ]);
         Inputtype::create([
             'name' => request('name')

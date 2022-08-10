@@ -16,7 +16,7 @@ class CreateInputsTable extends Migration
         Schema::create('inputs', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('input_type_id');
-            $table->string('name');
+            $table->string('name')->unique();
             $table->timestamps();
 
             $table->foreign('input_type_id')

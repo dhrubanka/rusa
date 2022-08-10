@@ -19,7 +19,7 @@ class CreateRecordsTable extends Migration
             $table->unsignedBigInteger('input_type_id');
             $table->string('fund_source');
             $table->text('specification_of_the_asset');
-            $table->string('unique_id');
+            $table->string('unique_id')->unique();
             $table->string('mode_of_purchase');
             $table->string('date_of_purchase');
             $table->string('image')->nullable();

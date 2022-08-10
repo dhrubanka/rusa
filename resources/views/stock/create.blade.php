@@ -4,6 +4,15 @@
 <div class="container">
     <div class="row">
         <div class="col-md-8 offset-md-2">
+          @if (count($errors) > 0)
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
             @if ($message = Session::get('success'))
             <div>
                 <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
@@ -37,7 +46,7 @@
                     <input type="hidden" class="form-control" name="name" value="{{$name}}">
                     <input type="hidden" class="form-control" name="available" value="{{$available}}">
                      
-                    <input type="hidden" class="form-control" name="record_id" value="{{$record_id}}" id="exampleInputEmail1" aria-describedby="emailHelp">
+                  
                     <div class="mb-3">
                         <label for="exampleInputEmail1" class="form-label">Stock Quantity</label>
                         <input type="number" class="form-control" name="stock_number" max="{{$available}}" placeholder=" Quantity Should not exceed {{$available}}" >

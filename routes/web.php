@@ -47,7 +47,7 @@ Route::middleware('auth')->group(function () {
             Route::put('/records/update/{id}', [RecordController::class, 'update']);
             Route::get('/records/delete/{id}', [RecordController::class, 'destroy']);
             //stock
-            Route::get('/stocks/{id}',[StockController::class, 'index']);  
+            Route::get('/stocks',[StockController::class, 'index']);  
             Route::post('/stocks/create/',[StockController::class, 'create']);  
             Route::post('/stocks/store',[StockController::class, 'store']);  
             Route::get('/stocks/getTypes/{id}', [StockController::class, 'getTypes']);  

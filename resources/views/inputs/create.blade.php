@@ -4,6 +4,15 @@
 <div class="container">
     <div class="row">
         <div class="col-md-8 offset-md-2">
+          @if (count($errors) > 0)
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
             @if ($message = Session::get('success'))
             <div>
                 <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">

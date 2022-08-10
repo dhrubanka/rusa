@@ -90,31 +90,7 @@
 
           </tbody>
     </table>
-    <h3>Stocks</h3>
-    <table  class="table">
-      <thead>
-        <tr>
-          <th scope="col">Stock Name</th>
-          <th scope="col">Stock Number</th>
-          <th scope="col">Issue Person</th>
-          <th scope="col">Receive Person</th>
-          <th scope="col">Date of Receive</th>
-        </tr>
-      </thead>
-      <tbody>
-         
-        @foreach ($record[0]->stocks as $stock)
-        <tr>
-            <td>{{$stock->name}}</td>  
-            <td>{{$stock->stock_number}}</td>  
-            <td>{{$stock->issue_person}}</td>  
-            <td>{{$stock->receive_person}}</td>  
-            <td>{{$stock->date_of_receive}}</td>  
-        </tr>
-        @endforeach
-      </body>
-    </table>
-  </div>
+    
   @else  <div class="text-center p-5" >
         <h1>No Record Found !
          <br> Enter your Record</h1>

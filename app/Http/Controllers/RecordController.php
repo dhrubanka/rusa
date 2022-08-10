@@ -108,7 +108,7 @@ class RecordController extends Controller
      */
     public function show($id)
     {
-         $record = Record::where('id',$id)->with('particulars')->with('monetaries')->get();
+        $record = Record::where('id',$id)->with('particulars')->with('monetaries')->get();
         //dd($record);
         if($record->isNotEmpty()){
                 if(  (Auth::user()->id == $record[0]->user_id)){
